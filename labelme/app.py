@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from labelme.widgets.brightness_contrast_dialog import change_window, change_window_from_bytes
+
 import functools
 import math
 import os
@@ -500,7 +502,8 @@ class MainWindow(QtWidgets.QMainWindow):
             enabled=False,
         )
         brightnessContrast = action(
-            "&Brightness Contrast",
+            # "&Brightness Contrast",
+            "Window Level - Window Width",
             self.brightnessContrast,
             None,
             "color",
@@ -1464,7 +1467,10 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.imageData:
                 self.imagePath = filename
             self.labelFile = None
-        image = QtGui.QImage.fromData(self.imageData)
+        # image = QtGui.QImage.fromData(self.imageData)
+        tmp = self.imageData
+        tmp = change_window_from_bytes(tmp)
+        image = QtGui.QImage.fromData(tmp)
 
         if image.isNull():
             formats = [
