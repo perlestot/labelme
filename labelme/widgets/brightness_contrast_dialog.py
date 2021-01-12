@@ -8,6 +8,11 @@ from .. import utils
 import numpy as np
 from PIL import Image
 
+STEP_SIZE_WL = 50 
+STEP_SIZE_WW = 50
+WL_RANGE = int(4000 / STEP_SIZE_WL)
+WW_RANGE = int(4000 / STEP_SIZE_WW)
+
 
 class BrightnessContrastDialog(QtWidgets.QDialog):
     def __init__(self, img, callback, parent=None):
@@ -28,8 +33,8 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
         self.callback = callback
 
     def onNewValue(self, value):
-        window_level = self.slider_window_level.value()
-        window_width = self.slider_window_width.value()
+        window_level = self.slider_window_level.value() * STEP_SIZE_WL
+        window_width = self.slider_window_width.value() * STEP_SIZE_WW
         print('Window Level:', window_level)
         print('Window Width:', window_width)
 
@@ -51,19 +56,19 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
 
     def _create_slider_WL(self):
         slider = QtWidgets.QSlider(Qt.Horizontal)
-        slider.setRange(0, 4000)
-        slider.setValue(2000)
-        slider.setTickInterval(100)
-        slider.setSingleStep(100)
+        slider.setRange(int(STEP_SIZE_WW/2), WL_RANGE)
+        slider.setValue(2000/STEP_SIZE_WW) # default value
+        # slider.setTickInterval(100)
+        # slider.setSingleStep(100)
         slider.valueChanged.connect(self.onNewValue)
         return slider
 
     def _create_slider_WW(self):
         slider = QtWidgets.QSlider(Qt.Horizontal)
-        slider.setRange(0, 2000)
-        slider.setValue(1000)
-        slider.setTickInterval(100)
-        slider.setSingleStep(100)
+        slider.setRange(STEP_SIZE_WW, WW_RANGE)
+        slider.setValue(4000/STEP_SIZE_WW) # default value
+        # slider.setTickInterval(100)
+        # slider.setSingleStep(100)
         slider.valueChanged.connect(self.onNewValue)
         return slider
 

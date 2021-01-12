@@ -53,6 +53,7 @@ class LabelFile(object):
             array = pydicom.read_file(filename).pixel_array
             image_pil = PIL.Image.fromarray(array)
             print('size:', image_pil.size)
+            print('Max val:', np.max(image_pil), 'Min val:', np.min(image_pil))
         except IOError:
             logger.error("Failed opening image file: {}".format(filename))
             return
