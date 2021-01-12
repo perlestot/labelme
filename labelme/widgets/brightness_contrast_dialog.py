@@ -2,7 +2,8 @@ import PIL.Image
 import PIL.ImageEnhance
 from qtpy.QtCore import Qt
 from qtpy import QtGui
-from qtpy import QtWidgets
+from qtpy import QtWidgets, QtCore
+from qtpy.QtWidgets import QCheckBox
 
 from .. import utils
 import numpy as np
@@ -22,10 +23,14 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
 
         self.slider_window_level = self._create_slider_WL()
         self.slider_window_width = self._create_slider_WW()
+        self.box_invert = self._create_box_invert()
+
+        self.box_invert.stateChanged.connect(self.clickBox)
 
         formLayout = QtWidgets.QFormLayout()
         formLayout.addRow(self.tr("Window Level"), self.slider_window_level)
         formLayout.addRow(self.tr("Window Width"), self.slider_window_width)
+        formLayout.addRow(self.tr("Invert"), self.box_invert)
         self.setLayout(formLayout)
 
         assert isinstance(img, PIL.Image.Image)
@@ -40,10 +45,17 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
 
         img = self.img
         img = np.asarray(img)
+        
+        # https://www.tutorialspoint.com/pyqt/pyqt_qcheckbox_widget.htm
+        print('ClickBox', self.box_invert.isChecked())
 
         low = window_level - window_width/2
         high = window_level + window_width/2
         img = change_window(img, low, high)
+
+        if self.box_invert.isChecked():
+            img = np.max(img) - img
+            
         # img = self.img
         # img = PIL.ImageEnhance.Brightness(img).enhance(brightness)
         # img = PIL.ImageEnhance.Contrast(img).enhance(contrast)
@@ -71,6 +83,20 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
         # slider.setSingleStep(100)
         slider.valueChanged.connect(self.onNewValue)
         return slider
+
+    def _create_box_invert(self):
+        # https://pythonprogramminglanguage.com/pyqt-checkbox/
+        box = QCheckBox("",self)
+        return box
+
+    def clickBox(self, state):
+
+        if state == QtCore.Qt.Checked:
+            print('Invert Checked')
+            return True
+        else:
+            print('Invert Unchecked')
+            return False
 
 
 def change_window(img, low, high):
