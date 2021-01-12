@@ -1395,13 +1395,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self.filename, (None, None)
         )
         if brightness is not None:
-            dialog.slider_window.setValue(brightness)
+            dialog.slider_window_level.setValue(brightness)
         if contrast is not None:
-            dialog.slider_window_size.setValue(contrast)
+            dialog.slider_window_width.setValue(contrast)
         dialog.exec_()
 
-        brightness = dialog.slider_window.value()
-        contrast = dialog.slider_window_size.value()
+        brightness = dialog.slider_window_level.value()
+        contrast = dialog.slider_window_width.value()
         self.brightnessContrast_values[self.filename] = (brightness, contrast)
 
     def togglePolygons(self, value):
@@ -1528,9 +1528,9 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.recentFiles[0], (None, None)
             )
         if brightness is not None:
-            dialog.slider_window.setValue(brightness)
+            dialog.slider_window_level.setValue(brightness)
         if contrast is not None:
-            dialog.slider_window_size.setValue(contrast)
+            dialog.slider_window_width.setValue(contrast)
         self.brightnessContrast_values[self.filename] = (brightness, contrast)
         if brightness is not None or contrast is not None:
             dialog.onNewValue(None)

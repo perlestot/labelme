@@ -13,14 +13,14 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
     def __init__(self, img, callback, parent=None):
         super(BrightnessContrastDialog, self).__init__(parent)
         self.setModal(True)
-        self.setWindowTitle("Window_Level/Window_Width")
+        self.setWindowTitle("Window Level/Window Width")
 
-        self.slider_window = self._create_slider_WL()
-        self.slider_window_size = self._create_slider_WW()
+        self.slider_window_level = self._create_slider_WL()
+        self.slider_window_width = self._create_slider_WW()
 
         formLayout = QtWidgets.QFormLayout()
-        formLayout.addRow(self.tr("Window Level"), self.slider_window)
-        formLayout.addRow(self.tr("Window Width"), self.slider_window_size)
+        formLayout.addRow(self.tr("Window Level"), self.slider_window_level)
+        formLayout.addRow(self.tr("Window Width"), self.slider_window_width)
         self.setLayout(formLayout)
 
         assert isinstance(img, PIL.Image.Image)
@@ -28,16 +28,16 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
         self.callback = callback
 
     def onNewValue(self, value):
-        window = self.slider_window.value()
-        window_size = self.slider_window_size.value()
-        print('window:', window)
-        print('window size:', window_size)
+        window_level = self.slider_window_level.value()
+        window_width = self.slider_window_width.value()
+        print('Window Level:', window_level)
+        print('Window Width:', window_width)
 
         img = self.img
         img = np.asarray(img)
 
-        low = window - window_size/2
-        high = window + window_size/2
+        low = window_level - window_width/2
+        high = window_level + window_width/2
         img = change_window(img, low, high)
         # img = self.img
         # img = PIL.ImageEnhance.Brightness(img).enhance(brightness)
