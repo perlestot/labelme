@@ -1,0 +1,9 @@
+
+ # Python3 input The following instructions for labelme installation:
+conda create --name=labelme python=3.6
+ #source activate labelme, the official said to use this, but I am prompted to make mistakes, you must use the following sentence
+conda activate labelme
+# conda install -c conda-forge pyside2
+# conda install pyqt
+# pip install pyqt5  # pyqt5 can be installed via pip on python3
+pip install labelme

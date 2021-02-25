@@ -1,0 +1,4 @@
+conda install -c conda-forge pillow -y
+conda install -c conda-forge pydicom -y
+conda install -c conda-forge gdcm -y
+pip install pylibjpeg pylibjpeg-libjpeg
