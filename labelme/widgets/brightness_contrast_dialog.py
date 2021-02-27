@@ -129,7 +129,7 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
         return box
 
     def clickBox(self, state):
-        print('state:',state, '\nQtCore:', QtCore.Qt.Checked)
+        # print('state:',state, '\nQtCore:', QtCore.Qt.Checked)
         if state == QtCore.Qt.Checked:
             print('Invert Checked')
             # For activating invert function immediately.
@@ -155,7 +155,8 @@ class BrightnessContrastDialog(QtWidgets.QDialog):
         #     self.box_invert.setChecked(False)
         # https://python-commandments.org/pyqt-qslider-and-qdial/
         # self.slider_window_level.setValue(int(self.max_val/2)/self.step_size_wl) # to default value
-        # self.slider_window_level.setValue(int(self.max_val/self.step_size_ww)) # to default value
+        # self.slider_window_width.setValue(int(self.max_val/self.step_size_ww)) # to default value
+        # self.slider_window_level.setSliderPosition(0)
         print('Reset')
 
 
